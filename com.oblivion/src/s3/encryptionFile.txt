@@ -1,0 +1,1 @@
+{'Rules': [{'ApplyServerSideEncryptionByDefault': {'SSEAlgorithm': 'aws:kms', 'KMSMasterKeyID': 'arn:aws:kms:us-east-1:{account_id}:alias/aws/s3'}}]}

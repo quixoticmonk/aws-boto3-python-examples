@@ -10,7 +10,7 @@ response_describe_regions = ec2_client.describe_regions()['Regions']
 instances=[]
 instance_ids=[]
 regions= []
-
+key_to_be_added={'Key': 'Accessibility', 'Value': 'Public'}
 
 for i in range(len(response_describe_regions)):
     region = response_describe_regions[i]['RegionName']
@@ -24,7 +24,7 @@ for region in regions:
             instance = response[i]['Instances']
             instances.append(instance)
     for instance in instances:
-        if({'Key': 'Accessibility', 'Value': 'Public'} not in instance[0]['Tags']):
+        if(key_to_be_added not in instance[0]['Tags']):
             print(instance[0]['Tags'],instance[0]['InstanceId'])
             print("Adding tags.......")
-            ec2.create_tags(Resources=[instance[0]['InstanceId']],Tags=[{'Key': 'Accessibility', 'Value': 'Public'}])
+            ec2.create_tags(Resources=[instance[0]['InstanceId']],Tags=[key_to_be_added])

@@ -15,7 +15,7 @@ instance_ids=[]
 regions= []
 
 
-def get_list_of_ec2s_all_regions():
+def stop_ec2_instances_all_regions():
     for i in range(len(response_describe_regions)):
         region = response_describe_regions[i]['RegionName']
         regions.append(region)
@@ -28,11 +28,11 @@ def get_list_of_ec2s_all_regions():
                 instance = response[i]['Instances']
                 instances.append(instance)
                 instance_ids.append(instance[0]['InstanceId'])
+                if(instance[0]['State']['Name']!='stopped'):
+                    print("Active instance : ",instance[0]['InstanceId'], "Stopping this ..")
+                    ec2.stop_instances(InstanceIds=[instance[0]['InstanceId']])
+                else:
+                    print("Stoppped instance: ",instance[0]['InstanceId'])
 
-    for instance in instances:
-        if(instance[0]['State']['Name']!='stopped'):
-            print("Active instance : ",instance[0]['InstanceId'])
-        else:
-            print("Stoppped instance: ",instance[0]['InstanceId'])
 
-get_list_of_ec2s_all_regions()
+stop_ec2_instances_all_regions()

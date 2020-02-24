@@ -2,10 +2,13 @@ from botocore.exceptions import ClientError
 import boto3
 import botostubs
 import logging
+import ast
 
 s3 = boto3.client('s3') #type: botostubs.S3
 s3_list_buckets = s3.list_buckets()
-default_encryption_json = (open("encryptionFile.txt")).read()
+
+with open("src/s3/encryptionFile.txt",'r') as f:
+    default_encryption_json = ast.literal_eval(f.read())
 
 for bucket in s3_list_buckets['Buckets']:
     bucket_name = bucket['Name']
